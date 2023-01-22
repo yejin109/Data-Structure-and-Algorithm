@@ -8,6 +8,7 @@ if __name__ == '__main__':
 from interface.sequence import Sequence
 from utils.setup import load_data
 from utils import log
+import env
 
 
 parser = argparse.ArgumentParser()
@@ -42,7 +43,7 @@ class ArraySequence(Sequence):
         self.items[i] = x
 
     def insert_at(self, i, x):
-        self.items = self.items[:i] + [x] + self.items[i+1:]
+        self.items = self.items[:i] + [x] + self.items[i:]
 
     def delete_at(self, i):
         del self.items[i]
@@ -69,9 +70,14 @@ def _array_seq_test(tsample):
     log.test_func(arr_seq.set_at, 0, -1)
     log.test_func(arr_seq.get_at, 0)
 
-    log.test_func(arr_seq.it, 0)
-    log.test_func(arr_seq.get_at, 0)
-    log.test_func(arr_seq.get_at, 0)
+    env.TEST_ITERATION = 1
+    log.test_func(arr_seq.__len__)
+    log.test_func(arr_seq.insert_at, 0, -1)
+    log.test_func(arr_seq.__len__)
+
+    log.test_func(arr_seq.__len__)
+    log.test_func(arr_seq.delete_at, 0)
+    log.test_func(arr_seq.__len__)
 
 
 if __name__ == '__main__':
